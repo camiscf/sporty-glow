@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Suas Conquistas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&amp;family=Noto+Serif:wght@600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#debfc2",
+                        "on-tertiary-fixed-variant": "#574144",
+                        "outline": "#906e75",
+                        "surface-container-highest": "#e7e0ed",
+                        "on-tertiary-fixed": "#281719",
+                        "tertiary-fixed": "#fbdbde",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#fef7ff",
+                        "on-secondary-fixed-variant": "#593d5f",
+                        "secondary-fixed": "#fcd7ff",
+                        "secondary": "#725477",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#886e71",
+                        "inverse-surface": "#322f38",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#77587c",
+                        "secondary-fixed-dim": "#dfbbe4",
+                        "surface-variant": "#e7e0ed",
+                        "on-secondary-fixed": "#2a1131",
+                        "surface-bright": "#fef7ff",
+                        "primary-container": "#b0f8ee",
+                        "on-primary-fixed": "#003732",
+                        "outline-variant": "#e5bcc4",
+                        "on-primary-container": "#00201d",
+                        "primary": "#40E0D0",
+                        "on-surface-variant": "#5c3f45",
+                        "tertiary": "#6e5659",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1d1a23",
+                        "primary-fixed-dim": "#6ef8e5",
+                        "secondary-container": "#fad3fd",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#006a60",
+                        "surface-container-high": "#ede5f2",
+                        "on-primary-fixed-variant": "#005048",
+                        "on-background": "#1d1a23",
+                        "background": "#fef7ff",
+                        "inverse-on-surface": "#f6eefb",
+                        "surface-tint": "#40E0D0",
+                        "surface-dim": "#ded7e4",
+                        "surface-container": "#f3ebf8",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#8efef1",
+                        "on-primary": "#003732",
+                        "surface-container-low": "#f8f1fe"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem"
+                    },
+                    spacing: {
+                        "lg": "40px",
+                        "xs": "4px",
+                        "container-margin": "20px",
+                        "xl": "64px",
+                        "gutter": "16px",
+                        "base": "8px",
+                        "md": "24px",
+                        "sm": "12px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Noto Serif"],
+                        "data-lg": ["Lexend"],
+                        "title-sm": ["Lexend"],
+                        "body-md": ["Lexend"],
+                        "label-xs": ["Lexend"],
+                        "display-lg": ["Noto Serif"]
+                    },
+                    fontSize: {
+                        "headline-md": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "data-lg": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "title-sm": ["20px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-xs": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(30, 27, 36, 0.08);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background relative overflow-x-hidden min-h-screen pb-32">
+<!-- Ambient Background Shapes -->
+<div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary-fixed/40 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+<div class="fixed bottom-[10%] right-[-20%] w-[600px] h-[600px] bg-secondary-fixed/50 rounded-full blur-[150px] -z-10 pointer-events-none"></div>
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 w-full px-5 py-3 flex justify-between items-center bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border-b border-white/30 dark:border-slate-800/50 shadow-[0_4px_20px_rgba(30,27,36,0.05)]">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
+<img alt="User fitness profile" class="w-full h-full object-cover" data-alt="close up portrait of a young fit woman with a neat ponytail and glowing skin wearing activewear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzQYqFon11pg4juxcFASHkO3981umsVBsnHVbvTEoubDD7yv6mkKs6c76knbr0VwJD8HML-_rowQYdBc9tlSbuc4BlpHjhvNSd5qlHATRFhtBVqLlr-l4OJDOULzu0JJDE6EKwhv_JE-xkVKDtivnn5RNHk_HXTvmIDxoNfvqBF6532Kt3ATuSI1E5z0-uf8gInCqKc6KKlVs8gVd22IPCTMHHF0J6dzzobW_Ql08EIaOyB07ZE9WMftqUoVpPNHh-YmE2TRtgVA"/>
+</div>
+<h1 class="font-headline-md text-[20px] text-primary tracking-tight text-center flex-1 mx-4 truncate leading-tight" style="font-weight: 700;">
+            Suas Conquistas
+        </h1>
+<button class="w-10 h-10 flex items-center justify-center text-primary hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors active:scale-95 duration-200 rounded-full flex-shrink-0">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-3xl mx-auto pt-md pb-xl">
+<!-- Stats Bento Grid -->
+<section class="px-container-margin grid grid-cols-2 gap-gutter">
+<!-- Current Streak -->
+<div class="glass-panel rounded-3xl p-md flex flex-col justify-between items-start relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary-fixed opacity-50 rounded-full blur-2xl group-hover:opacity-80 transition-opacity"></div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center mb-sm text-primary shadow-sm z-10 border border-white/50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="z-10">
+<h2 class="font-data-lg text-data-lg text-on-surface mb-xs">12</h2>
+<p class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">Current Streak</p>
+</div>
+</div>
+<!-- Total Days -->
+<div class="glass-panel rounded-3xl p-md flex flex-col justify-between items-start relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-secondary-fixed opacity-50 rounded-full blur-2xl group-hover:opacity-80 transition-opacity"></div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center mb-sm text-secondary shadow-sm z-10 border border-white/50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="z-10">
+<h2 class="font-data-lg text-data-lg text-on-surface mb-xs">12</h2>
+<p class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">Total Days</p>
+</div>
+</div>
+</section>
+<!-- Monthly Calendar -->
+<section class="px-container-margin mt-lg">
+<div class="glass-panel rounded-3xl p-md">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-title-sm text-title-sm text-on-surface">September</h3>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-y-sm text-center">
+<!-- Days Header -->
+<div class="font-label-xs text-label-xs text-on-surface-variant/70 pb-2">S</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant/70 pb-2">M</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant/70 pb-2">T</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant/70 pb-2">W</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant/70 pb-2">T</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant/70 pb-2">F</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant/70 pb-2">S</div>
+<!-- Empty slots for month start -->
+<div></div><div></div><div></div><div></div><div></div>
+<!-- Days -->
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">1</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">2</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">3</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">4</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">5</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">6</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">7</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">8</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">9</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">10</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_2px_10px_rgba(64,224,208,0.3)] font-body-md text-body-md font-medium">11</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full relative">
+<!-- Current Day -->
+<div class="w-8 h-8 rounded-full border-2 border-primary text-primary flex items-center justify-center font-body-md text-body-md font-bold bg-white/50">12</div>
+</div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">13</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">14</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">15</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">16</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">17</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">18</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">19</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">20</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">21</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">22</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">23</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">24</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">25</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">26</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">27</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">28</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">29</span></div>
+<div class="flex justify-center items-center h-10 w-full"><span class="font-body-md text-body-md text-on-surface-variant">30</span></div>
+</div>
+</div>
+</section>
+<!-- Consistency Chart -->
+<section class="px-container-margin mt-lg">
+<div class="glass-panel rounded-3xl p-md">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-title-sm text-title-sm text-on-surface">Consistency</h3>
+<div class="px-3 py-1 bg-surface-container rounded-full border border-white/40">
+<span class="font-label-xs text-label-xs text-secondary font-semibold uppercase">Workouts</span>
+</div>
+</div>
+<div class="h-48 w-full relative mt-4 flex items-end">
+<!-- Y Axis Labels -->
+<div class="absolute left-0 top-0 h-full flex flex-col justify-between text-[10px] text-on-surface-variant/50 font-medium pb-6">
+<span>100%</span>
+<span>50%</span>
+<span>0%</span>
+</div>
+<!-- Horizontal Grid Lines -->
+<div class="absolute left-8 right-0 top-0 h-full flex flex-col justify-between pb-6 pointer-events-none z-0">
+<div class="w-full border-t border-on-surface-variant/10"></div>
+<div class="w-full border-t border-on-surface-variant/10"></div>
+<div class="w-full border-t border-on-surface-variant/20"></div>
+</div>
+<!-- SVG Line Chart Area -->
+<div class="absolute left-8 right-0 top-0 h-[calc(100%-24px)] z-10 overflow-hidden">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 100 100">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#40E0D0" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#40E0D0" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Fill Area -->
+<path d="M 0,80 Q 15,60 33,70 T 66,40 T 100,20 L 100,100 L 0,100 Z" fill="url(#chartGradient)"></path>
+<!-- Stroke Line -->
+<path class="drop-shadow-[0_4px_6px_rgba(64,224,208,0.2)]" d="M 0,80 Q 15,60 33,70 T 66,40 T 100,20" fill="none" stroke="#40E0D0" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Data Points -->
+<circle cx="0" cy="80" fill="#ffffff" r="2.5" stroke="#40E0D0" stroke-width="1.5"></circle>
+<circle cx="16.6" cy="65" fill="#ffffff" r="2.5" stroke="#40E0D0" stroke-width="1.5"></circle>
+<circle cx="33.3" cy="70" fill="#ffffff" r="2.5" stroke="#40E0D0" stroke-width="1.5"></circle>
+<circle cx="50" cy="55" fill="#ffffff" r="2.5" stroke="#40E0D0" stroke-width="1.5"></circle>
+<circle cx="66.6" cy="40" fill="#ffffff" r="2.5" stroke="#40E0D0" stroke-width="1.5"></circle>
+<circle cx="83.3" cy="30" fill="#ffffff" r="2.5" stroke="#40E0D0" stroke-width="1.5"></circle>
+<circle class="drop-shadow-md" cx="100" cy="20" fill="#40E0D0" r="3.5" stroke="#ffffff" stroke-width="2"></circle>
+</svg>
+</div>
+<!-- X Axis Labels -->
+<div class="w-full flex justify-between ml-8 font-label-xs text-label-xs text-on-surface-variant pt-2 mt-auto border-t border-transparent relative z-20">
+<span>M</span>
+<span>T</span>
+<span>W</span>
+<span>T</span>
+<span>F</span>
+<span>S</span>
+<span class="text-primary font-bold">S</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-4 pt-3 pb-8 bg-white/70 dark:bg-slate-900/80 backdrop-blur-2xl rounded-t-[32px] border-t border-white/20 dark:border-slate-800/40 shadow-[0_-8px_30px_rgba(30,27,36,0.08)]">
+<!-- Home (Inactive) -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-teal-500 transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1">home</span>
+<span class="font-noto-serif text-[10px] font-semibold uppercase tracking-wider">Home</span>
+</a>
+<!-- Habits (Inactive) -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-teal-500 transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1">checklist</span>
+<span class="font-noto-serif text-[10px] font-semibold uppercase tracking-wider">Habits</span>
+</a>
+<!-- Gallery (Inactive) -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:text-teal-500 transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1">photo_library</span>
+<span class="font-noto-serif text-[10px] font-semibold uppercase tracking-wider">Gallery</span>
+</a>
+<!-- Stats (Active) -->
+<a class="flex flex-col items-center justify-center bg-teal-100/50 dark:bg-teal-900/40 text-teal-600 dark:text-teal-300 rounded-2xl px-5 py-2 hover:text-teal-500 transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="font-noto-serif text-[10px] font-semibold uppercase tracking-wider">Stats</span>
+</a>
+</nav>
+</body></html>

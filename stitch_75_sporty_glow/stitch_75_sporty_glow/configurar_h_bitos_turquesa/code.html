@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700;900&amp;family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e6ecec",
+                        "outline": "#6f797a",
+                        "inverse-surface": "#2d3131",
+                        "surface": "#f4fbfb",
+                        "surface-bright": "#f4fbfb",
+                        "surface-container": "#ebf1f1",
+                        "on-primary-fixed-variant": "#00504d",
+                        "tertiary": "#505f60",
+                        "on-surface": "#191c1c",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#191c1c",
+                        "tertiary-container": "#69797a",
+                        "secondary": "#526060",
+                        "on-secondary-fixed": "#0f1e1e",
+                        "surface-tint": "#008080",
+                        "secondary-fixed-dim": "#c0cecd",
+                        "secondary-fixed": "#dceae9",
+                        "on-primary-container": "#00201f",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eff1f1",
+                        "surface-container-low": "#f1f7f7",
+                        "on-tertiary-fixed": "#121e1e",
+                        "surface-container-highest": "#e0e6e6",
+                        "secondary-container": "#dceae9",
+                        "primary-container": "#40E0D0",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#bfc8c9",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#008080",
+                        "background": "#f4fbfb",
+                        "primary-fixed-dim": "#6be0d8",
+                        "primary-fixed": "#88fcf4",
+                        "tertiary-fixed-dim": "#b8cacb",
+                        "on-tertiary-container": "#f1ffff",
+                        "on-secondary-fixed-variant": "#3f4849",
+                        "surface-dim": "#d5dbdb",
+                        "on-secondary-container": "#526060",
+                        "surface-variant": "#dbe4e5",
+                        "inverse-primary": "#6be0d8",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#3f494a",
+                        "tertiary-fixed": "#d4e6e7",
+                        "on-surface-variant": "#3f4849",
+                        "on-primary-fixed": "#00201f",
+                        "turquoise-accent": "#40E0D0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "64px",
+                        "sm": "12px",
+                        "container-margin": "20px",
+                        "base": "8px",
+                        "lg": "40px",
+                        "md": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Noto Serif"],
+                        "body-md": ["Lexend"],
+                        "title-sm": ["Lexend"],
+                        "label-xs": ["Lexend"],
+                        "display-lg": ["Noto Serif"],
+                        "data-lg": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "title-sm": ["20px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "label-xs": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "data-lg": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .bg-blur-blob {
+            position: fixed;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen">
+<div class="bg-blur-blob w-[300px] h-[300px] bg-turquoise-accent top-[-100px] left-[-50px] rounded-full"></div>
+<div class="bg-blur-blob w-[400px] h-[400px] bg-primary-fixed-dim bottom-[-150px] right-[-100px] rounded-full"></div>
+<header class="bg-white/60 backdrop-blur-lg dark:bg-slate-900/60 docked full-width top-0 sticky z-50 border-b border-white/30 shadow-sm shadow-teal-900/5 flex justify-between items-center px-5 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform duration-150 text-primary">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-serif font-bold text-lg tracking-tight text-primary">Configurar Desafio</h1>
+</div>
+<button class="active:scale-95 transition-transform duration-150 text-primary bg-teal-50/50 p-2 rounded-xl">
+<span class="material-symbols-outlined" data-icon="check">check</span>
+</button>
+</header>
+<main class="px-container-margin py-base pb-32 flex flex-col gap-lg">
+<section>
+<div class="flex justify-between items-end mb-md">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Seus Hábitos</h2>
+<p class="font-label-xs text-label-xs text-outline uppercase">6 ativos no momento</p>
+</div>
+<button class="flex items-center gap-2 bg-turquoise-accent/20 text-primary px-4 py-2 rounded-full font-title-sm text-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    Novo
+                </button>
+</div>
+<div class="grid grid-cols-1 gap-gutter">
+<div class="glass-card p-4 rounded-xl flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-turquoise-accent/10 flex items-center justify-center text-turquoise-accent">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+</div>
+<div>
+<h3 class="font-title-sm text-base text-on-surface">Workout 1</h3>
+<p class="font-label-xs text-label-xs text-outline">45 min • Outdoor</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-outline hover:text-turquoise-accent transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</div>
+</div>
+<div class="glass-card p-4 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-turquoise-accent/10 flex items-center justify-center text-turquoise-accent">
+<span class="material-symbols-outlined" data-icon="exercise">exercise</span>
+</div>
+<div>
+<h3 class="font-title-sm text-base text-on-surface">Workout 2</h3>
+<p class="font-label-xs text-label-xs text-outline">45 min • Indoor</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-outline hover:text-turquoise-accent transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</div>
+</div>
+<div class="glass-card p-4 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-turquoise-accent/10 flex items-center justify-center text-turquoise-accent">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<h3 class="font-title-sm text-base text-on-surface">Dieta</h3>
+<p class="font-label-xs text-label-xs text-outline">No Cheat Meals</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-outline hover:text-turquoise-accent transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</div>
+</div>
+<div class="glass-card p-4 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-turquoise-accent/10 flex items-center justify-center text-turquoise-accent">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<h3 class="font-title-sm text-base text-on-surface">Água</h3>
+<p class="font-label-xs text-label-xs text-outline">3.7 Litros/dia</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-outline hover:text-turquoise-accent transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</div>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-md">
+<div class="flex flex-col gap-xs">
+<h2 class="font-headline-md text-headline-md text-on-surface">Editar Hábito</h2>
+<p class="font-body-md text-on-surface-variant">Personalize os detalhes do seu compromisso diário.</p>
+</div>
+<div class="flex flex-col gap-gutter">
+<div class="flex flex-col gap-2">
+<label class="font-label-xs text-label-xs text-outline uppercase ml-1">Nome do Hábito</label>
+<input class="w-full bg-surface-container-low border-b-2 border-turquoise-accent focus:border-primary focus:ring-0 px-4 py-3 rounded-t-xl font-body-md text-on-surface transition-colors" placeholder="Ex: Corrida Matinal" type="text" value="Workout 1"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-xs text-label-xs text-outline uppercase ml-1">Meta Diária</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-turquoise-accent focus:ring-0 px-4 py-3 rounded-t-xl font-body-md text-on-surface transition-colors" placeholder="Ex: 4000" type="text" value="45"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 font-label-xs text-outline">Minutos</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-xs text-label-xs text-outline uppercase ml-1">Ícone Representativo</label>
+<div class="grid grid-cols-6 gap-2 glass-card p-4 rounded-xl">
+<div class="aspect-square flex items-center justify-center rounded-lg bg-turquoise-accent text-white cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-lg bg-surface-container-highest text-outline cursor-pointer hover:bg-turquoise-accent/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="directions_run">directions_run</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-lg bg-surface-container-highest text-outline cursor-pointer hover:bg-turquoise-accent/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="pool">pool</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-lg bg-surface-container-highest text-outline cursor-pointer hover:bg-turquoise-accent/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="self_improvement">self_improvement</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-lg bg-surface-container-highest text-outline cursor-pointer hover:bg-turquoise-accent/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-lg bg-surface-container-highest text-outline cursor-pointer hover:bg-turquoise-accent/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="add_a_photo">add_a_photo</span>
+</div>
+</div>
+</div>
+<div class="glass-card p-4 rounded-xl flex items-center justify-between">
+<div>
+<h4 class="font-title-sm text-base text-on-surface">Lembrete Inteligente</h4>
+<p class="font-label-xs text-label-xs text-outline">Notificar se não concluído até às 18h</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-turquoise-accent"></div>
+</label>
+</div>
+</div>
+<button class="w-full bg-primary py-4 rounded-2xl text-white font-title-sm shadow-lg shadow-primary/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-4">
+                Salvar Alterações
+            </button>
+</section>
+<div class="rounded-3xl overflow-hidden shadow-xl shadow-teal-900/10 mb-8 relative aspect-[16/9]">
+<img alt="Pilates studio with soft morning light" class="w-full h-full object-cover" data-alt="Modern clean pilates studio with sunlight streaming through large windows hitting a white marble floor and pink yoga mats" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSQPUn9uef3DZO9Ad8D95qT1Fge4JGqhoFxUVgH3R_RlHitBtZzoXhHK5OHDI-RmciV81D4LdXD7SpTGb1M84G9dCPy_SYTwfvTycOX0sJ2DTr9DW0z3_Hu6oG-gGafioEfvCOkMj997Q8oMaXVtcyLyA1IMBcaCRDUzZuZHP8-X4Ij1uYtD7148TB6tgXSN5tD_UFh5jzrmTVErIHEXHQ85mLjIq-e5XTYHtS1vbvPRm6w8iBAWBD_3wxD6jPeAjK3qjoH2596w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
+<span class="bg-turquoise-accent text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase w-fit mb-2">Dica de hoje</span>
+<h3 class="font-serif text-white text-xl font-bold leading-tight">Consistência é o novo luxo. Mantenha seus hábitos impecáveis.</h3>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 w-full z-50 rounded-t-2xl bg-white/70 backdrop-blur-2xl dark:bg-slate-900/70 border-t border-white/40 shadow-[0_-4px_20px_rgba(30,27,36,0.05)] flex justify-around items-center px-2 py-3 pb-safe">
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-primary transition-all px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-serif text-[10px] font-medium uppercase tracking-widest mt-1">Hoje</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-teal-100/50 dark:bg-teal-900/40 text-primary dark:text-primary-fixed-dim rounded-xl px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="font-serif text-[10px] font-medium uppercase tracking-widest mt-1">Hábitos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-primary transition-all px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-serif text-[10px] font-medium uppercase tracking-widest mt-1">Estatísticas</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-primary transition-all px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-serif text-[10px] font-medium uppercase tracking-widest mt-1">Perfil</span>
+</a>
+</nav>
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-turquoise-accent rounded-full flex items-center justify-center text-white shadow-xl shadow-turquoise-accent/40 active:scale-90 transition-all z-40">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+</body></html>
