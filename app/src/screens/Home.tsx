@@ -6,10 +6,10 @@ import { dayNumber, quoteOfDay } from '../utils'
 type Props = {
   state: AppState
   today: string
-  onGoHabits: () => void
+  toggle: (habitId: string) => void
 }
 
-export const Home = ({ state, today, onGoHabits }: Props) => {
+export const Home = ({ state, today, toggle }: Props) => {
   const day = Math.min(state.totalDays, dayNumber(state.startDate, today))
   const totalProgress = day / state.totalDays
   const todayLog = state.logs[today]?.completed ?? {}
@@ -60,9 +60,10 @@ export const Home = ({ state, today, onGoHabits }: Props) => {
           {state.habits.map((h) => {
             const done = !!todayLog[h.id]
             return (
-              <div
+              <button
                 key={h.id}
-                className={`rounded-xl p-sm flex flex-col gap-1 transition-colors ${
+                onClick={() => toggle(h.id)}
+                className={`rounded-xl p-sm flex flex-col gap-1 text-left transition-colors active:scale-[0.98] ${
                   done
                     ? 'bg-primary-fixed/40 border border-primary-fixed'
                     : 'bg-surface-container-low border border-outline-variant/40'
@@ -83,17 +84,10 @@ export const Home = ({ state, today, onGoHabits }: Props) => {
                 <span className="font-semibold text-on-surface text-sm leading-tight">
                   {h.meta}
                 </span>
-              </div>
+              </button>
             )
           })}
         </div>
-
-        <button
-          onClick={onGoHabits}
-          className="mt-md w-full py-3 bg-primary text-on-primary font-semibold rounded-xl shadow-glow-primary active:scale-[0.98] transition-transform"
-        >
-          Marcar hábitos
-        </button>
       </section>
     </div>
   )

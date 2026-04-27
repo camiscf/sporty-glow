@@ -44,7 +44,7 @@ export const Stats = ({ state, today }: Props) => {
 
   const perHabit = state.habits.map((h) => {
     const done = allDates.filter((d) => state.logs[d]?.completed[h.id]).length
-    return { habit: h, done, total: allDates.length }
+    return { habit: h, done, total: state.totalDays }
   })
 
   const chartPoints = useMemo(

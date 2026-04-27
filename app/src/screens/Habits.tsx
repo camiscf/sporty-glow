@@ -197,14 +197,15 @@ const HabitEditor = ({ initial, onClose, onSave }: EditorProps) => {
       onClick={onClose}
     >
       <div
-        className="bg-surface w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl p-md flex flex-col gap-md max-h-[90vh] overflow-y-auto"
+        className="bg-surface w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl flex flex-col max-h-[100dvh] sm:max-h-[90dvh]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between p-md pb-sm shrink-0">
           <h3 className="font-serif text-2xl font-semibold text-on-surface">
             {initial ? 'Editar hábito' : 'Novo hábito'}
           </h3>
           <button
+            type="button"
             onClick={onClose}
             className="w-9 h-9 rounded-full hover:bg-surface-container flex items-center justify-center"
             aria-label="Fechar"
@@ -213,59 +214,65 @@ const HabitEditor = ({ initial, onClose, onSave }: EditorProps) => {
           </button>
         </div>
 
-        <label className="flex flex-col gap-1">
-          <span className="text-xs uppercase tracking-wider text-on-surface-variant">
-            Nome
-          </span>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="ex: Workout 1"
-            className="bg-surface-container-low rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
-          />
-        </label>
+        <div className="flex flex-col gap-md px-md py-sm overflow-y-auto flex-1">
+          <label className="flex flex-col gap-1">
+            <span className="text-xs uppercase tracking-wider text-on-surface-variant">
+              Nome
+            </span>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="ex: Workout 1"
+              className="bg-surface-container-low rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+            />
+          </label>
 
-        <label className="flex flex-col gap-1">
-          <span className="text-xs uppercase tracking-wider text-on-surface-variant">
-            Meta
-          </span>
-          <input
-            value={meta}
-            onChange={(e) => setMeta(e.target.value)}
-            placeholder="ex: 45 min outdoor"
-            className="bg-surface-container-low rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
-          />
-        </label>
+          <label className="flex flex-col gap-1">
+            <span className="text-xs uppercase tracking-wider text-on-surface-variant">
+              Meta
+            </span>
+            <input
+              value={meta}
+              onChange={(e) => setMeta(e.target.value)}
+              placeholder="ex: 45 min outdoor"
+              className="bg-surface-container-low rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+            />
+          </label>
 
-        <div className="flex flex-col gap-2">
-          <span className="text-xs uppercase tracking-wider text-on-surface-variant">
-            Ícone
-          </span>
-          <div className="grid grid-cols-5 gap-2">
-            {ICON_OPTIONS.map((opt) => (
-              <button
-                key={opt.icon}
-                onClick={() => setIcon(opt.icon)}
-                className={`aspect-square rounded-xl flex items-center justify-center transition ${
-                  icon === opt.icon
-                    ? 'bg-primary text-on-primary shadow-glow-primary'
-                    : 'bg-surface-container-low text-on-surface-variant'
-                }`}
-                aria-label={opt.label}
-              >
-                <Icon name={opt.icon} filled={icon === opt.icon} />
-              </button>
-            ))}
+          <div className="flex flex-col gap-2">
+            <span className="text-xs uppercase tracking-wider text-on-surface-variant">
+              Ícone
+            </span>
+            <div className="grid grid-cols-5 gap-2">
+              {ICON_OPTIONS.map((opt) => (
+                <button
+                  key={opt.icon}
+                  type="button"
+                  onClick={() => setIcon(opt.icon)}
+                  className={`aspect-square rounded-xl flex items-center justify-center transition ${
+                    icon === opt.icon
+                      ? 'bg-primary text-on-primary shadow-glow-primary'
+                      : 'bg-surface-container-low text-on-surface-variant'
+                  }`}
+                  aria-label={opt.label}
+                >
+                  <Icon name={opt.icon} filled={icon === opt.icon} />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        <button
-          disabled={!canSave}
-          onClick={() => onSave({ name: name.trim(), meta: meta.trim(), icon })}
-          className="mt-sm w-full py-3 bg-primary text-on-primary font-semibold rounded-xl shadow-glow-primary disabled:opacity-50 disabled:shadow-none active:scale-[0.98] transition-transform"
-        >
-          Salvar
-        </button>
+        <div className="p-md pt-sm shrink-0 border-t border-outline-variant/30 bg-surface">
+          <button
+            type="button"
+            disabled={!canSave}
+            onClick={() => onSave({ name: name.trim(), meta: meta.trim(), icon })}
+            className="w-full py-3 bg-primary text-on-primary font-semibold rounded-xl shadow-glow-primary disabled:opacity-50 disabled:shadow-none active:scale-[0.98] transition-transform"
+          >
+            Salvar
+          </button>
+        </div>
       </div>
     </div>
   )

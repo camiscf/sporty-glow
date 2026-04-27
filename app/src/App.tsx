@@ -14,6 +14,7 @@ const App = () => {
     state,
     today,
     setStartDate,
+    setTotalDays,
     addHabit,
     updateHabit,
     deleteHabit,
@@ -46,11 +47,7 @@ const App = () => {
 
       <main className="px-container-margin pt-md pb-[120px] max-w-2xl mx-auto relative z-10">
         {tab === 'home' && (
-          <Home
-            state={state}
-            today={today}
-            onGoHabits={() => setTab('habits')}
-          />
+          <Home state={state} today={today} toggle={toggleHabit} />
         )}
         {tab === 'habits' && (
           <Habits
@@ -90,6 +87,7 @@ const App = () => {
         <Settings
           state={state}
           setStartDate={setStartDate}
+          setTotalDays={setTotalDays}
           resetAll={resetAll}
           onClose={() => setSettingsOpen(false)}
         />

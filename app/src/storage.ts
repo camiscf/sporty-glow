@@ -54,6 +54,10 @@ export const useAppState = () => {
     setState((s) => ({ ...s, startDate: date }))
   }, [])
 
+  const setTotalDays = useCallback((n: number) => {
+    setState((s) => ({ ...s, totalDays: Math.max(1, Math.floor(n)) }))
+  }, [])
+
   const addHabit = useCallback((habit: Omit<Habit, 'id' | 'createdAt'>) => {
     setState((s) => ({
       ...s,
@@ -101,6 +105,7 @@ export const useAppState = () => {
   return {
     state,
     setStartDate,
+    setTotalDays,
     addHabit,
     updateHabit,
     deleteHabit,
