@@ -62,7 +62,7 @@ const App = () => {
         {tab === 'stats' && <Stats state={state} today={today} />}
       </main>
 
-      <nav className="bg-white/70 backdrop-blur-2xl border-t border-white/20 shadow-[0_-8px_30px_rgba(30,27,36,0.08)] fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-4 pt-3 pb-[max(env(safe-area-inset-bottom),24px)] w-full rounded-t-[32px]">
+      <nav className="bottom-nav bg-white/70 backdrop-blur-2xl border-t border-white/20 shadow-[0_-8px_30px_rgba(30,27,36,0.08)] fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-4 pt-3 pb-[max(env(safe-area-inset-bottom),24px)] w-full rounded-t-[32px]">
           <NavButton
             active={tab === 'home'}
             onClick={() => setTab('home')}

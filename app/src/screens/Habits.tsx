@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Icon } from '../components/Icon'
+import { useBodyClass } from '../hooks/useBodyClass'
 import type { AppState, Habit, HabitIcon } from '../types'
 import { ICON_OPTIONS } from '../types'
 
@@ -185,6 +186,7 @@ type EditorProps = {
 }
 
 const HabitEditor = ({ initial, onClose, onSave }: EditorProps) => {
+  useBodyClass('modal-open')
   const [name, setName] = useState(initial?.name ?? '')
   const [meta, setMeta] = useState(initial?.meta ?? '')
   const [icon, setIcon] = useState<HabitIcon>(initial?.icon ?? 'favorite')

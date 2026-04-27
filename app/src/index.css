@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body.modal-open .bottom-nav {
+  display: none;
+}
+body.modal-open {
+  overflow: hidden;
+}
+
 :root {
   color-scheme: light;
   -webkit-tap-highlight-color: transparent;
