@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Icon } from '../components/Icon'
 import type { AppState } from '../types'
 import { formatBR } from '../utils'
@@ -17,6 +18,18 @@ export const Settings = ({
   resetAll,
   onClose,
 }: Props) => {
+  const [daysInput, setDaysInput] = useState(String(state.totalDays))
+
+  const commitDays = () => {
+    const n = Number(daysInput)
+    if (!Number.isNaN(n) && n >= 1 && n <= 365) {
+      setTotalDays(n)
+      setDaysInput(String(Math.floor(n)))
+    } else {
+      setDaysInput(String(state.totalDays))
+    }
+  }
+
   return (
     <div
       className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60] flex items-end sm:items-center justify-center"
@@ -58,20 +71,33 @@ export const Settings = ({
           <span className="text-xs uppercase tracking-wider text-on-surface-variant">
             Duração (dias)
           </span>
-          <input
-            type="number"
-            inputMode="numeric"
-            min={1}
-            max={365}
-            value={state.totalDays}
-            onChange={(e) => {
-              const n = Number(e.target.value)
-              if (!Number.isNaN(n) && n > 0) setTotalDays(n)
-            }}
-            className="bg-surface-container-low rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
-          />
+          <div className="flex gap-2">
+            <input
+              type="number"
+              inputMode="numeric"
+              min={1}
+              max={365}
+              value={daysInput}
+              onChange={(e) => setDaysInput(e.target.value)}
+              onBlur={commitDays}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  commitDays()
+                  ;(e.target as HTMLInputElement).blur()
+                }
+              }}
+              className="flex-1 bg-surface-container-low rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
+            />
+            <button
+              type="button"
+              onClick={commitDays}
+              className="px-4 rounded-xl bg-primary text-on-primary font-semibold active:scale-95 transition-transform"
+            >
+              OK
+            </button>
+          </div>
           <span className="text-xs text-on-surface-variant mt-1">
-            Padrão: 75 (75 Hard). Mude pra 30, 90, 100…
+            Atual: {state.totalDays} dias. Padrão: 75 (75 Hard).
           </span>
         </label>
 
