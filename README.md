@@ -1,129 +1,103 @@
-# Sporty Glow
+# 🌿 Vida Gamificada
 
-> Tracker pessoal do desafio **75 Hard** — PWA mobile-first, com offline e sem backend.
+Um app pessoal de hábitos, metas e prêmios — feito pra transformar a rotina em algo que motiva, não que cobra. Você cumpre hábitos, ganha XP/moedas, sobe de nível, mantém streaks e troca as moedas por prêmios reais que você mesma define.
 
-Um app que eu construí pra mim mesma fazer o tracking dos hábitos diários do 75 Hard. Em vez de planilha ou app genérico, fiz um produto sob medida: meus hábitos, meu visual, meu fluxo. Funciona instalado no celular como app nativo, sem login, sem servidor, sem assinatura.
+---
 
-<p align="center">
-  <img src="docs/hero.png" alt="Sporty Glow — Home, Hábitos e Stats" width="800" />
-</p>
+## ✨ O que ele faz
 
-## Sobre o desafio
+- **Hábitos diários** com XP por conclusão — marque com um toque, ganhe pontos.
+- **Níveis e evolução** — a cada 200 XP você sobe de nível, de "Despertar" até "Arquiteta da Vida".
+- **Streak (dias seguidos)** — mantenha a sequência viva cumprindo ao menos um hábito por dia.
+- **Metas semanais** — cada hábito tem uma meta de dias por semana, com barra de progresso. Reseta toda segunda.
+- **Conquistas (badges)** — desbloqueadas automaticamente ao atingir marcos.
+- **Prêmios reais** — gaste moedas (XP) em recompensas da vida real que você cadastra. Você decide o que quer ganhar e quanto custa.
+- **Edição de hábitos** — mude nome, ícone, XP e meta semanal, ou crie e apague hábitos.
+- **Salvamento automático** — tudo fica guardado no próprio navegador (localStorage).
+- **Responsivo** — funciona bem no celular, tablet e computador.
 
-O **75 Hard** é um programa mental de 75 dias com 5 regras inegociáveis: dois treinos por dia (um obrigatoriamente outdoor), dieta restrita, hidratação, leitura e foto de progresso. O ponto: se falhar uma regra, volta pro dia 1.
+---
 
-Ferramentas existentes não cabiam pra mim — ou eram caras, ou cheias de features que eu não uso, ou simplesmente feias. Esse projeto foi a desculpa pra resolver o problema do meu jeito.
+## 🎯 A filosofia por trás
 
-## Features
+O app foi desenhado em torno de uma regra: **medir o sucesso por uma coisa, não por dez.**
 
-- **Day X / 75** — anel de progresso com o dia atual e percentual concluído
-- **Checklist diário** — toque pra marcar/desmarcar cada hábito do dia
-- **Hábitos editáveis** — criar, editar, deletar; escolher ícone e meta
-- **Stats** — streak atual, dias perfeitos, % por hábito, calendário e gráfico de linha (hábitos/dia + média)
-- **Data de início configurável** — pra começar quando você decidir, não no dia da instalação
-- **PWA instalável** — abre como app nativo no iOS e Android
-- **Offline-first** — service worker faz cache de tudo, abre sem internet
-- **Zero backend** — dados em `localStorage`, sem login, sem coleta
+Existe um hábito-âncora ("Primeira hora sem celular", destacado em dourado). Cumprir só ele já conta como uma vitória do dia e mantém o streak vivo. Isso protege contra a sensação de fracasso que faz a gente largar tudo quando um dia não sai perfeito.
 
-## Stack
+Os prêmios são movidos por **vontade de ganhar**, não por punição. A ideia é usar recompensas que te nutrem (descanso, lazer, autocuidado) como combustível positivo.
 
-| Tecnologia | Por quê |
+---
+
+## 📁 Arquivos do projeto
+
+| Arquivo | Função |
 |---|---|
-| **React 18 + TypeScript** | Type safety pra refactor sem medo, ecossistema maduro |
-| **Vite** | Dev server instantâneo, build pequeno e rápido |
-| **Tailwind CSS** | Tokens de design (cores, spacing, typography) direto do protótipo virando classes |
-| **vite-plugin-pwa** | Manifest + service worker via Workbox em uma linha de config |
-| **SVG puro** | Anel de progresso e gráfico de linha sem dependência de chart lib (~2KB vs ~70KB de uma recharts) |
-| **localStorage** | Persistência simples, suficiente pra um device |
+| `index.html` | O app inteiro (HTML + React + estilos num arquivo só) |
+| `manifest.json` | Faz o app ter nome e ícone ao ser adicionado à tela inicial |
+| `icon-512.png` | Ícone grande (512×512) |
+| `icon-180.png` | Ícone para tela inicial do iOS (180×180) |
+| `icon.svg` | Versão vetorial do ícone (fonte) |
 
-Bundle final: **52KB gzipped**, 1 chunk.
+> Os quatro primeiros precisam ficar **na mesma pasta** para tudo funcionar.
 
-## Decisões de design
+---
 
-**PWA em vez de nativo.** Uso pessoal, single-user — não vale o custo de provisionar Apple Developer, manter dois codebases ou passar por review. PWA resolve 100% das necessidades reais (instalação como ícone, funciona offline, gestos touch).
+## 🚀 Como rodar
 
-**Sem backend.** Não preciso sincronizar entre devices. `localStorage` evita custo de hospedagem, autenticação, política de privacidade e zero superfície de ataque. O JSON pode ser exportado pelo DevTools se eu quiser backup.
+### Localmente (testar no computador)
+Abra o `index.html` direto no navegador. Funciona sem instalar nada.
 
-**Sem chart lib.** O gráfico de linha (hábitos/dia + média) é SVG renderizado direto. Mantém o bundle pequeno, controle total sobre estilo e me dá mais um pedaço de SVG pra portfolio.
+### Publicar no Vercel (acesso pelo celular)
 
-**Tema "Grit & Glow".** Turquesa + glassmorphism — o nome do desafio é "Hard" mas a interface não precisa ser punitiva. Visual energético e acolhedor encoraja a abrir o app todo dia. Tipografia pareada: **Noto Serif** pra headlines (lado "Glow"), **Lexend** pro funcional (lado "Grit").
+**Jeito fácil — arrastar e soltar:**
+1. Coloque os 4 arquivos (`index.html`, `manifest.json`, `icon-512.png`, `icon-180.png`) numa pasta.
+2. Crie uma conta grátis em [vercel.com](https://vercel.com).
+3. Arraste a pasta para a área de deploy do Vercel.
+4. Ele gera um link público (ex: `seu-app.vercel.app`).
 
-## Screenshots
+**Jeito via GitHub (atualiza sozinho):**
+1. Suba os arquivos num repositório no GitHub.
+2. Conecte o repositório ao Vercel.
+3. Cada alteração no GitHub republica o app automaticamente.
 
-| Home | Hábitos | Stats |
-|---|---|---|
-| ![Home](docs/home.png) | ![Hábitos](docs/habits.png) | ![Stats](docs/stats.png) |
+### Adicionar à tela inicial do celular
+Abra o link no navegador do celular → menu → **"Adicionar à tela inicial"**. O app vira um ícone e abre em tela cheia, como um app nativo.
 
-> _Tirar screenshots: rodar `npm run dev`, abrir no DevTools mobile (iPhone 14), salvar em `docs/`._
+---
 
-## Arquitetura
+## ✏️ Como usar
 
-```
-src/
-  App.tsx              # shell: top bar, bottom nav, roteamento por estado
-  storage.ts           # useAppState() — hook único com localStorage
-  types.ts             # Habit, DailyLog, AppState, ICON_OPTIONS
-  utils.ts             # datas, dia do desafio, frases motivacionais
-  components/
-    Icon.tsx           # wrapper Material Symbols
-    ProgressRing.tsx   # anel SVG do Day X/75
-    LineChart.tsx      # gráfico SVG hábitos/dia + média
-  screens/
-    Home.tsx           # dashboard com ring + grid de hoje
-    Habits.tsx         # checklist + CRUD de hábitos
-    Stats.tsx          # streak, dias perfeitos, gráfico, calendário
-    Settings.tsx       # data de início, reset
-```
+- **Marcar hábito:** toque no hábito na aba *Hábitos*. Ganha XP na hora.
+- **Editar hábitos:** na aba *Hábitos*, toque em *✏️ Editar*. Mude nome, ícone, XP e meta; adicione ou apague hábitos. Toque em *✓ Concluir* quando terminar.
+- **Ver metas da semana:** aba *Metas*.
+- **Criar/resgatar prêmios:** aba *🎁 Prêmios*. Cadastre recompensas e resgate quando tiver moedas suficientes.
+- **Ver conquistas:** aba *Conquistas*.
+- **Marcar o dia:** o ideal é marcar tudo num momento fixo à noite (ex: depois de escovar os dentes).
 
-**Modelo de dados** (uma chave em `localStorage`):
+---
 
-```ts
-type AppState = {
-  startDate: string                 // YYYY-MM-DD
-  totalDays: number                 // 75
-  habits: Habit[]                   // {id, name, meta, icon}[]
-  logs: Record<string, DailyLog>    // por data: {date, completed: {habitId: bool}}
-}
-```
+## ⚙️ Detalhes técnicos
 
-## Rodando localmente
+- **Stack:** HTML + React 18 (via CDN) + Babel standalone. Sem build, sem instalação.
+- **Persistência:** `localStorage` (chave `vida-gamificada-v3`). Os dados ficam no navegador/aparelho onde o app é aberto.
+- **Sem backend:** roda 100% no navegador.
 
-```bash
-npm install
-npm run dev          # http://localhost:5173
-npm run build        # gera dist/
-npm run preview      # serve dist/ em :4173
-```
+### ⚠️ Sobre os dados
+Como usa `localStorage`, os dados ficam **só naquele navegador, naquele aparelho**. Limpar o cache/histórico do navegador apaga o progresso. Para uso pessoal num aparelho só, funciona muito bem — mas não conte com ele como backup permanente, e não sincroniza entre dispositivos diferentes.
 
-## Deploy
+---
 
-Qualquer host estático serve. Recomendo Vercel:
+## 🔧 Personalizar
 
-```bash
-npm i -g vercel
-vercel               # primeira vez
-vercel --prod        # atualizações
-```
+- **Hábitos iniciais:** edite a lista `DEFAULT_HABITS` no `index.html`.
+- **Prêmios iniciais:** edite `DEFAULT_REWARDS`.
+- **Nomes dos níveis:** edite o array `LEVELS`.
+- **Conquistas:** edite o array `BADGES`.
+- **XP por nível:** mude a constante `XP_PER_LEVEL` (padrão: 200).
+- **Cores:** ajuste as variáveis CSS no `:root` (paleta verde-lima sobre fundo escuro).
 
-Alternativas: arrastar `dist/` em [Netlify Drop](https://app.netlify.com/drop), ou GitHub Pages (ajustar `base` no `vite.config.ts` se subpath).
+---
 
-## Instalando no celular
+## 💚 Feito para uso pessoal
 
-Depois de hospedado em https:
-
-- **iOS Safari:** compartilhar → "Adicionar à Tela de Início"
-- **Android Chrome:** menu → "Instalar app"
-
-A partir daí abre como app nativo, com ícone, splash screen e funciona offline.
-
-## Próximos passos
-
-- [ ] Notificações de lembrete (Web Push API)
-- [ ] Export/import de backup pela UI (sem precisar do DevTools)
-- [ ] Modo dark
-- [ ] Animação de celebração quando completa todos os hábitos do dia
-- [ ] Compartilhar progresso (gerar imagem do Day X/75 pra stories)
-
-## Licença
-
-MIT — usa, copia, modifica.
+Este é um projeto pessoal de organização de rotina. Use, adapte e ajuste como fizer sentido pra sua vida.

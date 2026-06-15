@@ -1,22 +1,481 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#40e0d0" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Sporty Glow" />
-    <link rel="apple-touch-icon" href="/icon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
-    <title>Sporty Glow</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vida Gamificada</title>
+<link rel="icon" type="image/png" href="icon-512.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vida">
+<meta name="theme-color" content="#0d0f0c">
+<link rel="manifest" href="manifest.json">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap');
+  :root {
+    --bg: #0d0f0c; --bg-card: #16190f; --bg-soft: #1c2014;
+    --ink: #f4f6ec; --ink-soft: #a8b094; --ink-faint: #6b7259;
+    --lime: #c4f000; --lime-dim: #8fa600; --moss: #5a7d2a; --clay: #d98b4a; --gold: #e8c547;
+    --line: #2a2f1d; --glow: rgba(196, 240, 0, 0.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Space Mono', monospace; -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at 15% 10%, rgba(196,240,0,0.06), transparent 40%), radial-gradient(circle at 85% 90%, rgba(90,125,42,0.08), transparent 45%); background-attachment: fixed; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 28px 20px 80px; }
+  .display { font-family: 'Fraunces', serif; }
+  .topbar { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 8px; }
+  .greeting { font-size: 13px; color: var(--ink-soft); letter-spacing: 0.5px; text-transform: uppercase; }
+  .date { font-size: 11px; color: var(--ink-faint); }
+  .tabs { display: flex; gap: 8px; margin: 16px 0 20px; }
+  .tab { flex: 1; background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-soft); font-family: 'Space Mono'; font-size: 11px; padding: 10px; border-radius: 10px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+  .tab.active { background: var(--lime); color: var(--bg); border-color: var(--lime); font-weight: 700; }
+  .hero { background: var(--bg-card); border: 1px solid var(--line); border-radius: 20px; padding: 24px; margin-bottom: 18px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -40%; right: -10%; width: 240px; height: 240px; background: radial-gradient(circle, var(--glow), transparent 70%); pointer-events: none; }
+  .level-row { display: flex; align-items: baseline; gap: 14px; }
+  .lvl-num { font-family: 'Fraunces', serif; font-size: 64px; font-weight: 600; line-height: 0.9; color: var(--lime); }
+  .lvl-label { display: flex; flex-direction: column; }
+  .lvl-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; }
+  .lvl-sub { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
+  .xpbar-wrap { margin-top: 18px; }
+  .xpbar-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-soft); margin-bottom: 6px; }
+  .xpbar { height: 10px; background: var(--bg-soft); border-radius: 99px; overflow: hidden; border: 1px solid var(--line); }
+  .xpbar-fill { height: 100%; background: linear-gradient(90deg, var(--moss), var(--lime)); border-radius: 99px; transition: width 0.6s cubic-bezier(.2,.8,.2,1); box-shadow: 0 0 12px var(--glow); }
+  .stat-strip { display: flex; gap: 10px; margin-top: 20px; }
+  .stat { flex: 1; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 12px; padding: 12px; text-align: center; }
+  .stat-val { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--ink); }
+  .stat-val.fire { color: var(--clay); }
+  .stat-val.coin { color: var(--gold); }
+  .stat-key { font-size: 10px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .sec-row { display: flex; align-items: center; justify-content: space-between; margin: 4px 0 12px; }
+  .sec-row .sec-t { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; }
+  .edit-toggle { background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-soft); font-family: 'Space Mono'; font-size: 10px; padding: 6px 12px; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; }
+  .edit-toggle:hover, .edit-toggle.on { border-color: var(--lime); color: var(--lime); }
+  .habit { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: transform 0.15s, border-color 0.2s, background 0.2s; }
+  .habit:hover { transform: translateX(3px); border-color: var(--moss); }
+  .habit.done { background: linear-gradient(90deg, rgba(196,240,0,0.07), var(--bg-card)); border-color: var(--lime-dim); }
+  .habit.anchor { border-color: var(--gold); }
+  .habit.editing { cursor: default; }
+  .habit.editing:hover { transform: none; }
+  .check { width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--ink-faint); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 15px; font-weight: 700; color: var(--bg); }
+  .habit.done .check { background: var(--lime); border-color: var(--lime); }
+  .habit-icon { font-size: 20px; }
+  .habit-body { flex: 1; }
+  .habit-name { font-size: 13px; font-weight: 700; }
+  .habit.done .habit-name { text-decoration: line-through; color: var(--ink-soft); }
+  .habit-meta { font-size: 10px; color: var(--ink-faint); margin-top: 2px; }
+  .habit-cat { font-size: 9px; padding: 2px 7px; border-radius: 99px; background: var(--bg-soft); color: var(--ink-soft); border: 1px solid var(--line); text-transform: uppercase; letter-spacing: 0.5px; }
+  .anchor-tag { font-size: 9px; padding: 2px 7px; border-radius: 99px; background: rgba(232,197,71,0.15); color: var(--gold); border: 1px solid var(--gold); text-transform: uppercase; letter-spacing: 0.5px; }
+  .habit-xp { font-family: 'Space Mono'; font-size: 11px; font-weight: 700; color: var(--lime-dim); }
+  .habit.done .habit-xp { color: var(--lime); }
+  .streak-tag { font-size: 10px; color: var(--clay); font-weight: 700; white-space: nowrap; }
+  .icon-btn { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 8px; color: var(--ink-soft); cursor: pointer; font-size: 13px; padding: 6px 9px; transition: all 0.2s; }
+  .icon-btn:hover { border-color: var(--lime); color: var(--lime); }
+  .icon-btn.del:hover { border-color: var(--clay); color: var(--clay); }
+  /* EDIT FORM */
+  .ed-card { background: var(--bg-soft); border: 1px solid var(--lime-dim); border-radius: 14px; padding: 16px; margin-bottom: 10px; }
+  .ed-title { font-size: 11px; color: var(--lime); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .ed-grid { display: grid; grid-template-columns: 60px 1fr; gap: 10px; margin-bottom: 10px; }
+  .ed-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .ed-field label { font-size: 9px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+  .ed-field input { width: 100%; background: var(--bg); border: 1px solid var(--line); color: var(--ink); font-family: 'Space Mono'; font-size: 13px; padding: 9px 10px; border-radius: 8px; text-align: center; }
+  .ed-field input.txt { text-align: left; }
+  .ed-field input:focus { outline: none; border-color: var(--lime-dim); }
+  .ed-actions { display: flex; gap: 8px; }
+  .ed-save { flex: 2; background: var(--lime); color: var(--bg); border: none; font-family: 'Space Mono'; font-weight: 700; font-size: 11px; padding: 10px; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ed-cancel { flex: 1; background: transparent; color: var(--ink-soft); border: 1px solid var(--line); font-family: 'Space Mono'; font-size: 11px; padding: 10px; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+  .add-habit-btn { width: 100%; background: var(--bg-soft); border: 1px dashed var(--line); color: var(--ink-soft); font-family: 'Space Mono'; font-size: 12px; padding: 14px; border-radius: 14px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; margin-top: 4px; }
+  .add-habit-btn:hover { border-color: var(--lime); color: var(--lime); }
+  .wk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .wk-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+  .wk-head { display: flex; justify-content: space-between; align-items: center; }
+  .wk-name { font-size: 12px; font-weight: 700; }
+  .wk-pct { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: var(--lime); }
+  .wk-prog { font-size: 10px; color: var(--ink-faint); margin: 6px 0 7px; }
+  .wk-bar { height: 6px; background: var(--bg-soft); border-radius: 99px; overflow: hidden; }
+  .wk-bar-fill { height: 100%; background: linear-gradient(90deg, var(--moss), var(--lime)); border-radius: 99px; transition: width 0.5s; }
+  .badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .badge { aspect-ratio: 1; background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center; padding: 8px; transition: transform 0.2s; }
+  .badge.locked { opacity: 0.32; filter: grayscale(1); }
+  .badge.unlocked:hover { transform: scale(1.06); border-color: var(--lime-dim); }
+  .badge-emoji { font-size: 26px; }
+  .badge-name { font-size: 8px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+  .reward { background: var(--bg-card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; margin-bottom: 12px; position: relative; overflow: hidden; }
+  .reward.claimed { border-color: var(--gold); background: linear-gradient(90deg, rgba(232,197,71,0.08), var(--bg-card)); }
+  .reward.ready { border-color: var(--lime); }
+  .reward-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .reward-name { font-size: 15px; font-weight: 700; font-family: 'Fraunces', serif; }
+  .reward-cost { font-family: 'Space Mono'; font-size: 12px; color: var(--gold); font-weight: 700; white-space: nowrap; }
+  .reward-bar { height: 8px; background: var(--bg-soft); border-radius: 99px; overflow: hidden; margin: 12px 0 6px; }
+  .reward-bar-fill { height: 100%; border-radius: 99px; transition: width 0.5s; }
+  .reward-status { font-size: 10px; color: var(--ink-faint); display: flex; justify-content: space-between; }
+  .reward-btn { width: 100%; margin-top: 12px; background: var(--lime); color: var(--bg); border: none; font-family: 'Space Mono'; font-weight: 700; font-size: 12px; padding: 10px; border-radius: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+  .reward-btn:disabled { background: var(--bg-soft); color: var(--ink-faint); cursor: not-allowed; }
+  .reward-del { position: absolute; top: 14px; right: 14px; background: none; border: none; color: var(--ink-faint); cursor: pointer; font-size: 14px; opacity: 0.4; transition: opacity 0.2s; }
+  .reward:hover .reward-del { opacity: 1; }
+  .add-form { background: var(--bg-soft); border: 1px dashed var(--line); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
+  .add-form input { width: 100%; background: var(--bg); border: 1px solid var(--line); color: var(--ink); font-family: 'Space Mono'; font-size: 13px; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; }
+  .add-form input:focus { outline: none; border-color: var(--lime-dim); }
+  .add-form label { font-size: 10px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+  .add-btn { width: 100%; background: var(--lime); color: var(--bg); border: none; font-family: 'Space Mono'; font-weight: 700; font-size: 12px; padding: 11px; border-radius: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+  .intro { font-size: 11px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 16px; background: var(--bg-soft); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; padding: 12px 14px; }
+  .toast-zone { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .toast { background: var(--lime); color: var(--bg); font-weight: 700; font-size: 12px; padding: 12px 22px; border-radius: 99px; box-shadow: 0 8px 30px var(--glow); animation: pop 0.4s cubic-bezier(.2,1.4,.4,1); display: flex; align-items: center; gap: 8px; }
+  .toast.levelup { background: var(--clay); font-family: 'Fraunces', serif; font-size: 14px; }
+  .toast.reward { background: var(--gold); font-family: 'Fraunces', serif; font-size: 14px; }
+  @keyframes pop { from { transform: translateY(20px) scale(0.8); opacity: 0; } }
+  .actions { display: flex; gap: 10px; margin-top: 28px; }
+  .btn { flex: 1; background: var(--bg-soft); border: 1px solid var(--line); color: var(--ink-soft); font-family: 'Space Mono'; font-size: 11px; padding: 11px; border-radius: 10px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+  .btn:hover { border-color: var(--moss); color: var(--ink); }
+  .btn.danger:hover { border-color: var(--clay); color: var(--clay); }
+  .loading { text-align: center; padding: 80px 20px; color: var(--ink-faint); font-size: 13px; }
+
+  /* ===== RESPONSIVO ===== */
+  @media (max-width: 600px) {
+    .wrap { padding: 20px 14px 70px; }
+    .topbar { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .date { font-size: 10px; }
+    .hero { padding: 20px 18px; border-radius: 18px; }
+    .lvl-num { font-size: 52px; }
+    .lvl-title { font-size: 18px; }
+    .stat-strip { gap: 7px; }
+    .stat { padding: 10px 6px; border-radius: 10px; }
+    .stat-val { font-size: 19px; }
+    .stat-key { font-size: 9px; letter-spacing: 0.5px; }
+    .tabs { gap: 6px; }
+    .tab { padding: 9px 4px; font-size: 10px; letter-spacing: 0; }
+    .habit { padding: 13px 13px; gap: 11px; }
+    .habit-name { font-size: 13px; }
+    .wk-grid { gap: 8px; }
+    .badge-grid { gap: 8px; }
+    .badge-emoji { font-size: 22px; }
+    .toast { font-size: 11px; padding: 11px 18px; }
+  }
+  @media (max-width: 380px) {
+    .lvl-num { font-size: 44px; }
+    .stat-val { font-size: 16px; }
+    .stat-key { font-size: 8px; }
+    .tab { font-size: 9px; }
+    .badge-grid { grid-template-columns: repeat(3, 1fr); }
+    .ed-grid2 { grid-template-columns: 1fr; }
+  }
+  /* dispositivos de toque: sem hover, inputs sem zoom no iOS */
+  @media (hover: none) {
+    .habit:active { transform: scale(0.99); }
+    input { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const DEFAULT_HABITS = [
+  { id: 'celular',   name: 'Primeira hora sem celular', icon: '📵', cat: 'Foco',     xp: 30, wkGoal: 7, anchor: true },
+  { id: 'treino',    name: 'Treino na academia',        icon: '🏋️', cat: 'Saúde',    xp: 25, wkGoal: 5 },
+  { id: 'agua',      name: 'Beber 2L de água',           icon: '💧', cat: 'Saúde',    xp: 10, wkGoal: 7 },
+  { id: 'comida',    name: 'Alimentação limpa',          icon: '🥗', cat: 'Saúde',    xp: 15, wkGoal: 6 },
+  { id: 'sono',      name: 'Dormir 21h',                 icon: '😴', cat: 'Saúde',    xp: 15, wkGoal: 6 },
+  { id: 'medita',    name: 'Meditar 10min',              icon: '🧘', cat: 'Mente',    xp: 15, wkGoal: 5 },
+  { id: 'leitura',   name: 'Ler 30min',                  icon: '📚', cat: 'Mente',    xp: 15, wkGoal: 5 },
+  { id: 'mestrado',  name: 'Pesquisa do mestrado',       icon: '🎓', cat: 'Carreira', xp: 35, wkGoal: 4 },
+  { id: 'estudo',    name: 'Estudar / inglês',           icon: '💻', cat: 'Carreira', xp: 25, wkGoal: 5 },
+  { id: 'conteudo',  name: 'Gravar / postar conteúdo',   icon: '🎨', cat: 'Carreira', xp: 20, wkGoal: 3 },
+];
+
+const LEVELS = ['Despertar','Iniciante','Constante','Disciplinada','Focada','Imparável','Estrategista','Mestre da Rotina','Lenda','Arquiteta da Vida'];
+
+const BADGES = [
+  { id: 'first',    emoji: '🌱', name: '1º dia',       test: s => s.totalDays >= 1 },
+  { id: 'streak3',  emoji: '🔥', name: 'Streak 3',     test: s => s.bestStreak >= 3 },
+  { id: 'streak7',  emoji: '⚡', name: 'Semana cheia', test: s => s.bestStreak >= 7 },
+  { id: 'streak30', emoji: '👑', name: 'Mês de fogo',  test: s => s.bestStreak >= 30 },
+  { id: 'lvl5',     emoji: '⭐', name: 'Nível 5',      test: s => s.level >= 5 },
+  { id: 'xp1000',   emoji: '💎', name: '1000 XP',      test: s => s.totalXp >= 1000 },
+  { id: 'perfect',  emoji: '🎯', name: 'Dia perfeito', test: s => s.perfectDays >= 1 },
+  { id: 'mestre',   emoji: '🏆', name: 'Mestrado 20x', test: s => (s.lifetime.mestrado||0) >= 20 },
+];
+
+const DEFAULT_REWARDS = [
+  { id: 'r1', name: 'Um café especial / doce favorito', cost: 150, claimed: false },
+  { id: 'r2', name: 'Tarde de cinema ou série sem culpa', cost: 400, claimed: false },
+  { id: 'r3', name: 'Peça nova de roupa fitness', cost: 1000, claimed: false },
+];
+
+const XP_PER_LEVEL = 200;
+const todayKey = () => new Date().toISOString().slice(0, 10);
+function getWeekId() { const d = new Date(); const o = new Date(d.getFullYear(),0,1); const w = Math.ceil((((d-o)/86400000)+o.getDay()+1)/7); return d.getFullYear()+'-W'+w; }
+
+function App() {
+  const [loaded, setLoaded] = useState(false);
+  const [data, setData] = useState(null);
+  const [tab, setTab] = useState('habitos');
+  const [toasts, setToasts] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [draft, setDraft] = useState(null);
+  const [newName, setNewName] = useState('');
+  const [newCost, setNewCost] = useState('');
+  const toastId = useRef(0);
+
+  useEffect(() => {
+    let saved = null;
+    try { const r = localStorage.getItem('vida-gamificada-v3'); if (r) saved = JSON.parse(r); } catch (e) {}
+    const base = { habits: DEFAULT_HABITS, totalXp: 0, spentXp: 0, bestStreak: 0, currentStreak: 0, lastCompleteDay: null,
+      totalDays: 0, perfectDays: 0, today: { day: todayKey(), done: {} }, weekly: {}, lifetime: {},
+      unlocked: [], rewards: DEFAULT_REWARDS, weekId: getWeekId() };
+    const merged = { ...base, ...(saved || {}) };
+    if (!merged.habits || !merged.habits.length) merged.habits = DEFAULT_HABITS;
+    if (!merged.today || merged.today.day !== todayKey()) merged.today = { day: todayKey(), done: {} };
+    const wk = getWeekId();
+    if (merged.weekId !== wk) { merged.weekId = wk; merged.weekly = {}; }
+    if (!merged.rewards) merged.rewards = DEFAULT_REWARDS;
+    setData(merged); setLoaded(true);
+  }, []);
+
+  function save(next) { setData(next); try { localStorage.setItem('vida-gamificada-v3', JSON.stringify(next)); } catch (e) {} }
+  function pushToast(msg, type) { const id = ++toastId.current; setToasts(t => [...t, { id, msg, type }]); setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 2800); }
+  function levelOf(xp) { return Math.min(LEVELS.length, Math.floor(xp / XP_PER_LEVEL) + 1); }
+  const availableXp = () => (data.totalXp - (data.spentXp || 0));
+
+  function toggleHabit(h) {
+    if (editMode) return;
+    const next = JSON.parse(JSON.stringify(data));
+    const wasDone = !!next.today.done[h.id];
+    const prevLevel = levelOf(next.totalXp);
+    if (wasDone) {
+      delete next.today.done[h.id];
+      next.totalXp = Math.max(0, next.totalXp - h.xp);
+      next.weekly[h.id] = Math.max(0, (next.weekly[h.id] || 0) - 1);
+      next.lifetime[h.id] = Math.max(0, (next.lifetime[h.id] || 0) - 1);
+    } else {
+      next.today.done[h.id] = true;
+      next.totalXp += h.xp;
+      next.weekly[h.id] = (next.weekly[h.id] || 0) + 1;
+      next.lifetime[h.id] = (next.lifetime[h.id] || 0) + 1;
+      pushToast(`+${h.xp} XP · ${h.name}`, 'xp');
+    }
+    const doneCount = Object.keys(next.today.done).length;
+    const tk = todayKey();
+    if (doneCount > 0 && next.lastCompleteDay !== tk) {
+      const yest = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+      next.currentStreak = (next.lastCompleteDay === yest) ? next.currentStreak + 1 : 1;
+      next.lastCompleteDay = tk; next.totalDays += 1; next.bestStreak = Math.max(next.bestStreak, next.currentStreak);
+    } else if (doneCount === 0 && next.lastCompleteDay === tk) {
+      next.lastCompleteDay = null; next.currentStreak = Math.max(0, next.currentStreak - 1); next.totalDays = Math.max(0, next.totalDays - 1);
+    }
+    if (doneCount === next.habits.length) { if (!next._perfectToday) { next.perfectDays += 1; next._perfectToday = true; pushToast('🎯 DIA PERFEITO!', 'levelup'); } }
+    else { next._perfectToday = false; }
+    const newLevel = levelOf(next.totalXp);
+    if (newLevel > prevLevel) pushToast(`NÍVEL ${newLevel} · ${LEVELS[newLevel-1]}`, 'levelup');
+    const snap = { ...next, level: newLevel };
+    BADGES.forEach(b => { if (!next.unlocked.includes(b.id) && b.test(snap)) { next.unlocked.push(b.id); pushToast(`${b.emoji} Conquista: ${b.name}`, 'levelup'); } });
+    save(next);
+  }
+
+  function startEdit(h) { setEditingId(h.id); setDraft({ ...h }); }
+  function cancelEdit() { setEditingId(null); setDraft(null); }
+  function saveEdit() {
+    if (!draft.name.trim()) return;
+    const next = JSON.parse(JSON.stringify(data));
+    next.habits = next.habits.map(h => h.id === editingId ? {
+      ...h, name: draft.name.trim(), icon: draft.icon || '✅',
+      xp: Math.max(1, parseInt(draft.xp,10) || 10), wkGoal: Math.min(7, Math.max(1, parseInt(draft.wkGoal,10) || 5)),
+      cat: draft.cat || h.cat
+    } : h);
+    save(next); cancelEdit(); pushToast('Hábito atualizado ✓', 'xp');
+  }
+  function deleteHabit(id) {
+    if (!confirm('Apagar este hábito? O histórico dele será perdido.')) return;
+    const next = JSON.parse(JSON.stringify(data));
+    next.habits = next.habits.filter(h => h.id !== id);
+    delete next.today.done[id]; delete next.weekly[id]; delete next.lifetime[id];
+    save(next); cancelEdit();
+  }
+  function addHabit() {
+    const next = JSON.parse(JSON.stringify(data));
+    const id = 'h' + Date.now();
+    const novo = { id, name: 'Novo hábito', icon: '✅', cat: 'Geral', xp: 15, wkGoal: 5 };
+    next.habits.push(novo);
+    save(next); setEditingId(id); setDraft({ ...novo });
+  }
+
+  function claimReward(r) {
+    if (availableXp() < r.cost) return;
+    const next = JSON.parse(JSON.stringify(data));
+    next.spentXp = (next.spentXp || 0) + r.cost;
+    next.rewards = next.rewards.map(x => x.id === r.id ? { ...x, claimed: true, claimedDate: todayKey() } : x);
+    save(next);
+    pushToast(`🎁 Resgatado: ${r.name}`, 'reward');
+  }
+  function addReward() {
+    const cost = parseInt(newCost, 10);
+    if (!newName.trim() || !cost || cost <= 0) return;
+    const next = JSON.parse(JSON.stringify(data));
+    next.rewards.push({ id: 'r' + Date.now(), name: newName.trim(), cost, claimed: false });
+    save(next); setNewName(''); setNewCost('');
+  }
+  function delReward(id) {
+    const next = JSON.parse(JSON.stringify(data));
+    next.rewards = next.rewards.filter(x => x.id !== id);
+    save(next);
+  }
+  function reset() {
+    if (!confirm('Zerar todo o progresso? Isso não tem volta.')) return;
+    save({ habits: data.habits, totalXp: 0, spentXp: 0, bestStreak: 0, currentStreak: 0, lastCompleteDay: null, totalDays: 0, perfectDays: 0,
+      today: { day: todayKey(), done: {} }, weekly: {}, lifetime: {}, unlocked: [], rewards: data.rewards.map(r=>({...r,claimed:false,claimedDate:null})), weekId: getWeekId() });
+    pushToast('Progresso zerado', 'xp');
+  }
+
+  if (!loaded || !data) return <div className="loading">carregando seu progresso…</div>;
+  const level = levelOf(data.totalXp);
+  const xpInLevel = data.totalXp % XP_PER_LEVEL;
+  const xpPct = level >= LEVELS.length ? 100 : (xpInLevel / XP_PER_LEVEL) * 100;
+  const doneToday = Object.keys(data.today.done).length;
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
+
+  return (
+    <div className="wrap">
+      <div className="topbar">
+        <div className="greeting">{greet}, Ingra</div>
+        <div className="date">{new Date().toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long' })}</div>
+      </div>
+
+      <div className="hero">
+        <div className="level-row">
+          <div className="lvl-num">{level}</div>
+          <div className="lvl-label">
+            <div className="lvl-title display">{LEVELS[level-1]}</div>
+            <div className="lvl-sub">{data.totalXp} XP total · {availableXp()} disponível</div>
+          </div>
+        </div>
+        <div className="xpbar-wrap">
+          <div className="xpbar-meta"><span>Nível {level}</span><span>{level >= LEVELS.length ? 'MÁX' : `${xpInLevel}/${XP_PER_LEVEL} → nível ${level+1}`}</span></div>
+          <div className="xpbar"><div className="xpbar-fill" style={{width: xpPct + '%'}} /></div>
+        </div>
+        <div className="stat-strip">
+          <div className="stat"><div className="stat-val fire">{data.currentStreak}🔥</div><div className="stat-key">streak</div></div>
+          <div className="stat"><div className="stat-val">{doneToday}/{data.habits.length}</div><div className="stat-key">hoje</div></div>
+          <div className="stat"><div className="stat-val coin">{availableXp()}</div><div className="stat-key">moedas</div></div>
+          <div className="stat"><div className="stat-val">{data.unlocked.length}</div><div className="stat-key">badges</div></div>
+        </div>
+      </div>
+
+      <div className="tabs">
+        <div className={'tab' + (tab==='habitos'?' active':'')} onClick={()=>setTab('habitos')}>Hábitos</div>
+        <div className={'tab' + (tab==='metas'?' active':'')} onClick={()=>setTab('metas')}>Metas</div>
+        <div className={'tab' + (tab==='premios'?' active':'')} onClick={()=>setTab('premios')}>🎁 Prêmios</div>
+        <div className={'tab' + (tab==='badges'?' active':'')} onClick={()=>setTab('badges')}>Conquistas</div>
+      </div>
+
+      {tab === 'habitos' && <div>
+        <div className="sec-row">
+          <span className="sec-t display">Hábitos de hoje</span>
+          <button className={'edit-toggle' + (editMode?' on':'')} onClick={()=>{setEditMode(!editMode); cancelEdit();}}>{editMode ? '✓ Concluir' : '✏️ Editar'}</button>
+        </div>
+        {data.habits.map(h => {
+          const done = !!data.today.done[h.id];
+          const lifetime = data.lifetime[h.id] || 0;
+          if (editMode && editingId === h.id) {
+            return (
+              <div key={h.id} className="ed-card">
+                <div className="ed-title">Editando hábito</div>
+                <div className="ed-grid">
+                  <div className="ed-field"><label>Ícone</label><input value={draft.icon} maxLength={2} onChange={e=>setDraft({...draft, icon:e.target.value})} /></div>
+                  <div className="ed-field"><label>Nome</label><input className="txt" value={draft.name} onChange={e=>setDraft({...draft, name:e.target.value})} /></div>
+                </div>
+                <div className="ed-grid2">
+                  <div className="ed-field"><label>XP por vez</label><input type="number" value={draft.xp} onChange={e=>setDraft({...draft, xp:e.target.value})} /></div>
+                  <div className="ed-field"><label>Meta/semana</label><input type="number" min="1" max="7" value={draft.wkGoal} onChange={e=>setDraft({...draft, wkGoal:e.target.value})} /></div>
+                </div>
+                <div className="ed-actions">
+                  <button className="ed-save" onClick={saveEdit}>Salvar</button>
+                  <button className="ed-cancel" onClick={cancelEdit}>Cancelar</button>
+                  <button className="icon-btn del" onClick={()=>deleteHabit(h.id)}>🗑</button>
+                </div>
+              </div>
+            );
+          }
+          return (
+            <div key={h.id} className={'habit' + (done ? ' done' : '') + (h.anchor ? ' anchor' : '') + (editMode?' editing':'')} onClick={() => editMode ? startEdit(h) : toggleHabit(h)}>
+              {!editMode && <div className="check">{done ? '✓' : ''}</div>}
+              <div className="habit-icon">{h.icon}</div>
+              <div className="habit-body">
+                <div className="habit-name">{h.name}</div>
+                <div className="habit-meta">{h.anchor ? <span className="anchor-tag">âncora · vitória mínima</span> : <span className="habit-cat">{h.cat}</span>} · feito {lifetime}x</div>
+              </div>
+              {editMode ? <button className="icon-btn" onClick={(e)=>{e.stopPropagation(); startEdit(h);}}>✏️</button> : <>
+                {lifetime >= 3 && <div className="streak-tag">🔥{lifetime}</div>}
+                <div className="habit-xp">+{h.xp}</div>
+              </>}
+            </div>
+          );
+        })}
+        {editMode && <button className="add-habit-btn" onClick={addHabit}>+ Adicionar novo hábito</button>}
+      </div>}
+
+      {tab === 'metas' && <div className="wk-grid">
+        {data.habits.map(h => {
+          const cur = data.weekly[h.id] || 0;
+          const pct = Math.min(100, Math.round((cur / h.wkGoal) * 100));
+          return (
+            <div key={h.id} className="wk-card">
+              <div className="wk-head"><div className="wk-name">{h.icon} {h.name.split(' ').slice(0,2).join(' ')}</div><div className="wk-pct">{pct}%</div></div>
+              <div className="wk-prog">{cur}/{h.wkGoal} dias</div>
+              <div className="wk-bar"><div className="wk-bar-fill" style={{width: pct + '%'}} /></div>
+            </div>
+          );
+        })}
+      </div>}
+
+      {tab === 'premios' && <div>
+        <div className="intro">Você ganha moedas (XP) cumprindo hábitos. Gaste em prêmios reais que VOCÊ escolhe. A regra de ouro: só resgate de verdade quando o app liberar — é o seu trato com você mesma. 🤝</div>
+        {data.rewards.map(r => {
+          const av = availableXp();
+          const pct = Math.min(100, Math.round((av / r.cost) * 100));
+          const ready = av >= r.cost;
+          return (
+            <div key={r.id} className={'reward' + (r.claimed ? ' claimed' : ready ? ' ready' : '')}>
+              <button className="reward-del" onClick={()=>delReward(r.id)}>✕</button>
+              <div className="reward-top">
+                <div className="reward-name">{r.claimed ? '✓ ' : ''}{r.name}</div>
+                <div className="reward-cost">{r.cost} 🪙</div>
+              </div>
+              {!r.claimed && <>
+                <div className="reward-bar"><div className="reward-bar-fill" style={{width: pct + '%', background: ready ? 'linear-gradient(90deg,var(--gold),var(--lime))' : 'linear-gradient(90deg,var(--moss),var(--lime-dim))'}} /></div>
+                <div className="reward-status"><span>{Math.min(av, r.cost)}/{r.cost} moedas</span><span>{ready ? 'pronto pra resgatar!' : `faltam ${r.cost - av}`}</span></div>
+                <button className="reward-btn" disabled={!ready} onClick={()=>claimReward(r)}>{ready ? '🎁 Resgatar prêmio' : '🔒 Continue acumulando'}</button>
+              </>}
+              {r.claimed && <div className="reward-status" style={{marginTop:10}}><span>Resgatado em {r.claimedDate}</span><span style={{color:'var(--gold)'}}>aproveite! 🎉</span></div>}
+            </div>
+          );
+        })}
+        <div className="add-form">
+          <label>Criar novo prêmio</label>
+          <input type="text" placeholder="ex: massagem, jantar fora, livro novo…" value={newName} onChange={e=>setNewName(e.target.value)} />
+          <div><input type="number" placeholder="custo em moedas (ex: 500)" value={newCost} onChange={e=>setNewCost(e.target.value)} /></div>
+          <button className="add-btn" onClick={addReward}>+ Adicionar prêmio</button>
+        </div>
+      </div>}
+
+      {tab === 'badges' && <div className="badge-grid">
+        {BADGES.map(b => {
+          const got = data.unlocked.includes(b.id);
+          return <div key={b.id} className={'badge ' + (got ? 'unlocked' : 'locked')}><div className="badge-emoji">{got ? b.emoji : '🔒'}</div><div className="badge-name">{b.name}</div></div>;
+        })}
+      </div>}
+
+      <div className="actions"><button className="btn danger" onClick={reset}>↺ Zerar progresso</button></div>
+      <div className="toast-zone">{toasts.map(t => <div key={t.id} className={'toast ' + (t.type==='levelup'?'levelup':t.type==='reward'?'reward':'')}>{t.msg}</div>)}</div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
 </html>
